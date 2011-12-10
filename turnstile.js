@@ -3,9 +3,7 @@ var _turnstile = {
 		rate: 250,
 		limit: 8
 	},
-	_q: {
-		list: []
-	},
+	_q: [],
 	_p: {
 		rate: 0,
 		n: 0,
@@ -22,11 +20,11 @@ var _turnstile = {
 					_turnstile._p.active = false;
 					clearInterval(_turnstile._p.poll);
 				} else {
-					if(typeof _turnstile._q.list[0] == 'function' && !_turnstile._p.active) {
+					if(typeof _turnstile._q[0] == 'function' && !_turnstile._p.active) {
 						_turnstile._p.n = 0;
 						_turnstile._p.active = true;
-						_turnstile._q.list[0](_turnstile._p);
-						_turnstile._q.list.splice(0,1);
+						_turnstile._q[0](_turnstile._p);
+						_turnstile._q.splice(0,1);
 						_turnstile._p.active = false;
 					} else {
 						_turnstile._p.n++;
@@ -44,7 +42,7 @@ var _turnstile = {
 		this._p.limit = this._defaults.limit;
 	},
 	push: function(callback) {
-		this._q.list.push(callback);
+		this._q.push(callback);
 		if(!this._p.running) {
 			this._p.start();
 		}
