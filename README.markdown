@@ -38,7 +38,9 @@ var ts = turnstile({
 
 ```javascript
 var ts.push(my_function);
-
+```
+or
+```javascript
 var ts.push(function(){
 	// do something
 });
@@ -53,7 +55,7 @@ var ts.push(function(){
 ```javascript
 for(var i = 1; i <= 5; i++) {
 	t.push( function() {
-		console.log(n + ', ');
+		console.log(i + ', ');
 	});
 }
 ```
