@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+	<title>Turnstile demo</title>
+	<script src="turnstile.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+	<script type="text/javascript">
+		$(function(){
+			var t = turnstile({rate:100});
+			$('.result').html('<p></p>');
+			
+			
+			
+			// -- push multiple and dispatch
+			
+			for(var i = 1; i <= 20; i++) {
+				(function() {
+					var n = i;
+					t.push( function() { $('.result p').append(n + ', '); });
+				})();
+			}
+			t.push( function() {
+				var txt = $('.result p').text();
+				$('.result p').text(txt.substr(0, txt.lastIndexOf(', ')));
+			});
+
+
+
+			// -- push weighty calculation
+			// this blocks queue until complete
+			
+			t.push( function(){
+				var j = 0;
+				for(var i = 0; i <= 2000; i++) {
+					j += i;
+				}
+				$('.result').append('<p>' + j + '</p>');
+			});
+			
+			
+			
+			// -- push events
+			
+			$('.events button').click(function(e){
+				e.preventDefault();
+				var obj = $(this);
+				t.push( function() { obj.after('<p>clicked</p>'); console.log('it worked') });
+			});
+		});
+	</script>
+</head>
+<body>
+	<div class="result" style="border:1px solid #ccc;width:500px; padding:0 20px;"></div>
+	<div class="events" style="border:1px solid #ccc;width:500px; padding:0 20px;">
+		<button style="margin:10px 0;">Trigger new event</a>
+	</div>
+</body>
+</html>
