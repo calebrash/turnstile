@@ -11,10 +11,10 @@
 ##Options
 
 ###rate
-- Controls the frequency at which the queue executes.
+- Controls the frequency at which the queue executes. Default 250ms.
 
 ###limit
-- Contols the number of times an empty queue should run before dying.
+- Contols the number of times an empty queue should run before dying. Default 8 times.
 	
 
 ##Usage
@@ -29,7 +29,7 @@ or with options...
 
 ```javascript
 var ts = turnstile({
-	rate: 1000,
+	rate: 1000, // time in ms
 	limit: 5
 });
 ```
