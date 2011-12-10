@@ -4,10 +4,18 @@
 
 ##Methods
 
-push(callback)
-	Adds the callback to the execution queue.
+###push(callback)
+- Adds the callback to the execution queue.
 	
 
+##Options
+
+###rate
+- Controls the frequency at which the queue executes. Default 250ms.
+
+###limit
+- Contols the number of times an empty queue should run before dying. Default 8 times.
+	
 
 ##Usage
 
@@ -17,12 +25,23 @@ push(callback)
 var ts = turnstile();
 ```
 
+or with options...
+
+```javascript
+var ts = turnstile({
+	rate: 1000, // time in ms
+	limit: 5
+});
+```
 
 ###Standard application
 
 ```javascript
 var ts.push(my_function);
+```
+or
 
+```javascript
 var ts.push(function(){
 	// do something
 });
@@ -37,7 +56,7 @@ var ts.push(function(){
 ```javascript
 for(var i = 1; i <= 5; i++) {
 	t.push( function() {
-		console.log(n + ', ');
+		console.log(i + ', ');
 	});
 }
 ```
