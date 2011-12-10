@@ -40,7 +40,7 @@ var ts = turnstile({
 var ts.push(my_function);
 ```
 or
-	
+
 ```javascript
 var ts.push(function(){
 	// do something
