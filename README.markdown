@@ -4,16 +4,16 @@
 
 ##Methods
 
-push(callback)
+###push(callback)
 - Adds the callback to the execution queue.
 	
 
 ##Options
 
-rate
+###rate
 - Controls the frequency at which the queue executes.
 
-limit
+###limit
 - Contols the number of times an empty queue should run before dying.
 	
 
