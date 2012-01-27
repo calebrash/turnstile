@@ -1,6 +1,8 @@
 #Turnstile: JavaScript execution scheduler
 
+Turnstile is used to rate limit JavaScript execution. This is useful in situations where execution order is important and you do not necessarily have control over that order, or potentially processor-intensive situations where you don't have control over how many processes are trying to run at once.
 
+For example, suppose you have a image editing web app with buttons 'Grayscale' and 'Blur'. Assume a user clicks both buttons in rapid succession. Without turnstile, you might have an image that's one-half blurry and one-half grayscale. That sucks. Passing the grayscaling and blurring functions through Turnstile would queue the processes, making each function wait its turn.
 
 ##Methods
 
