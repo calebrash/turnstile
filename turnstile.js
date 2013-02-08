@@ -60,5 +60,5 @@
     } else {
         window.turnstile = turnstile;
     }
-    
+
 }) ();
