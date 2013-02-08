@@ -1,56 +1,64 @@
-var _turnstile = {
-    _defaults: {
-        rate: 250,
-        limit: 8
-    },
-    _q: [],
-    _p: {
-        rate: 0,
-        n: 0,
-        limit: 0,
-        active: false,
-        poll: false,
-        running: false,
-        start: function() {
-            this.running = true;
-            this.n = 0;
-            this.poll = setInterval(function() {
-                if(_turnstile._p.n >= _turnstile._p.limit) {
-                    _turnstile._p.running = false;
-                    _turnstile._p.active = false;
-                    clearInterval(_turnstile._p.poll);
-                } else {
-                    if(typeof _turnstile._q[0] == 'function' && !_turnstile._p.active) {
-                        _turnstile._p.n = 0;
-                        _turnstile._p.active = true;
-                        _turnstile._q[0](_turnstile._p);
-                        _turnstile._q.splice(0,1);
-                        _turnstile._p.active = false;
+(function (win) {
+    var _ts = {
+        _defaults: {
+            rate: 250,
+            limit: 8
+        },
+        _q: [],
+        _p: {
+            rate: 0,
+            n: 0,
+            limit: 0,
+            active: false,
+            poll: false,
+            running: false,
+            start: function() {
+                this.running = true;
+                this.n = 0;
+                this.poll = setInterval(function() {
+                    if(_ts._p.n >= _ts._p.limit) {
+                        _ts._p.running = false;
+                        _ts._p.active = false;
+                        clearInterval(_ts._p.poll);
                     } else {
-                        _turnstile._p.n++;
+                        if(typeof _ts._q[0] == 'function' && !_ts._p.active) {
+                            _ts._p.n = 0;
+                            _ts._p.active = true;
+                            _ts._q[0](_ts._p);
+                            _ts._q.splice(0,1);
+                            _ts._p.active = false;
+                        } else {
+                            _ts._p.n++;
+                        }
                     }
-                }
-            }, this.rate);
+                }, this.rate);
+            }
+        },
+        init: function(options) {
+            if(typeof options == 'object') {
+                this._defaults.rate = typeof options.rate == 'number' ? options.rate : this._defaults.rate;
+                this._defaults.limit = typeof options.limit == 'number' ? options.limit : this._defaults.limit;
+            }
+            this._p.rate = this._defaults.rate;
+            this._p.limit = this._defaults.limit;
+        },
+        push: function(callback) {
+            this._q.push(callback);
+            if(!this._p.running) {
+                this._p.start();
+            }
         }
-    },
-    init: function(options) {
-        if(typeof options == 'object') {
-            this._defaults.rate = typeof options.rate == 'number' ? options.rate : this._defaults.rate;
-            this._defaults.limit = typeof options.limit == 'number' ? options.limit : this._defaults.limit;
-        }
-        this._p.rate = this._defaults.rate;
-        this._p.limit = this._defaults.limit;
-    },
-    push: function(callback) {
-        this._q.push(callback);
-        if(!this._p.running) {
-            this._p.start();
-        }
+    };
+
+    var turnstile = function(options) {
+        _ts.init(options);
+        return _ts;
+    };
+
+    if(module && module.exports) {
+        module.exports = turnstile;
+    } else {
+        window.turnstile = turnstile;
     }
-};
 
-var turnstile = function(options) {
-    _turnstile.init(options);
-    return _turnstile;
-};
-
+}) ();

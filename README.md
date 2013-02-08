@@ -4,6 +4,15 @@ Turnstile is used to rate limit JavaScript execution. This is useful in situatio
 
 For example, suppose you have a image editing web app with buttons 'Grayscale' and 'Blur'. Assume a user clicks both buttons in rapid succession. Without turnstile, you might have an image that's one-half blurry and one-half grayscale. That sucks. Passing the grayscaling and blurring functions through Turnstile would queue the processes, making each function wait its turn.
 
+_Version 1.1.0_
+
+## Now with Node support!
+__Note:__ Turnstile hasn't been published to NPM yet. You will need to download/clone this repository.
+```javascript
+var turnstile = require('./turnstile'),
+    limiter = turnstile();
+```
+
 ##Methods
 
 ###push(callback)
@@ -24,7 +33,12 @@ For example, suppose you have a image editing web app with buttons 'Grayscale' a
 ###Initialize
 
 ```javascript
+// browser
 var ts = turnstile();
+
+// node
+var turnstile = require('./turnstile'),
+    ts = turnstile();
 ```
 
 or with options...

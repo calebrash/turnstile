@@ -1,7 +1,7 @@
 {
-    "name": "--",
-    "description": "--",
-    "version": "0.0.1",
+    "name": "turnstile",
+    "description": "javascript rate-limiter and execution scheduler",
+    "version": "1.1.0",
     "dependencies": {
         "grunt": "*"
     }
